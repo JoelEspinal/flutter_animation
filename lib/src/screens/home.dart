@@ -1,4 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+
+import 'dart:math';
 
 import '../widgets/cat.dart';
 
@@ -10,10 +14,17 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> with TickerProviderStateMixin {
   Animation<double> catAnimation;
   AnimationController catController;
+  Animation<double> boxAimation;
+  AnimationController boxController;
 
   @override
   void initState() {
     super.initState();
+
+    boxController = AnimationController(
+      duration: Duration(seconds: 2),
+      vsync: this,
+    );
 
     catController = AnimationController(
       duration: Duration(milliseconds: 200),
@@ -40,6 +51,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
             children: [
               buildCatAnimation(),
               buildBox(),
+              buildLeftFlap(),
             ],
           ),
         ),
@@ -74,8 +86,23 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
   Widget buildBox() {
     return Container(
       width: 200,
-      height: 250,
+      height: 200,
       color: Colors.brown,
+    );
+  }
+
+  Widget buildLeftFlap() {
+    return Positioned(
+      left: 3.0,
+      child: Transform.rotate(
+        child: Container(
+          height: 10.0,
+          width: 125.0,
+          color: Colors.brown,
+        ),
+        angle: pi * 0.6,
+        alignment: Alignment.topLeft,
+      ),
     );
   }
 }
